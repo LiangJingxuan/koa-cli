@@ -1,7 +1,7 @@
 /* 用户操作 */
 
 const router=require('koa-router')();
-const userModule=require('.././user');
+const userModule=require('../../model/user');
 
 router
     .get('/', async (ctx)=>{
