@@ -1,4 +1,5 @@
 const koa=require('koa');
+const views=require('koa-views');
 const bodyparser=require('koa-bodyparser');
 const session=require('koa-session-minimal');
 const router=require('koa-router')();
@@ -10,6 +11,7 @@ const deploy=require('./config/default').config;
 const app=new koa();
 
 // 中间件配置
+app.use(views('views',{extension: 'ejs'}));
 app.use(statics(paths.join(__dirname,'./www'),{dynamic:true},{maxAge: 365*24*60*60}));
 app.use(bodyparser());
 app.use(session({
@@ -22,7 +24,7 @@ app.use(session({
 }));
 
 // 路由
-router.use('/index', require('./router/layout/index'));
+router.use('/', require('./router/layout/index'));
 router.use('/admin', require('./router/admin/index'));
 
 app.use(router.routes()).use(router.allowedMethods());
